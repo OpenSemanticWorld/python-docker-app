@@ -1,0 +1,46 @@
+#todo: replicas, tags
+
+version: '3.8'
+services:
+  app:
+    image: python-docker-app
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+    #  - "8020:8769"
+       - "8555:80"
+    networks:
+      - caddy
+    environment:
+      BOKEH_ALLOW_WS_ORIGIN: ${DOMAIN}
+      BOKEH_RESOURCES: cdn
+      OAUTH_CLIENT_ID: ${OAUTH_CLIENT_ID}
+      OAUTH_CLIENT_SECRET: ${OAUTH_CLIENT_SECRET}
+      APP_SESSION_SECRET: ${APP_SESSION_SECRET}
+      APP_JWT_KEY: ${APP_JWT_KEY}
+      APP_JWE_KEY: ${APP_JWE_KEY}
+      OSW_SERVER: ${OSW_SERVER}
+      APP_HOST: ${APP_HOST}
+      APP_PORT: ${APP_PORT}
+      APP_DOMAIN: ${DOMAIN}
+    labels:
+      #caddy: ${DOMAIN}
+      ##caddy.reverse_proxy: "{{upstreams 8769}}"
+      #caddy.reverse_proxy: "{{upstreams 80}}"
+      #caddy_01: ${DOMAIN}/static
+      #caddy_01.redir: app.${DOMAIN} permanent
+      #caddy_02: app.${DOMAIN}
+      #caddy_02.0_header: "?Access-Control-Allow-Origin *"
+      #caddy_02.reverse_proxy: "{{upstreams 5001}}"
+      caddy: ${DOMAIN}
+      caddy.handle_01: /panel*
+      caddy.handle_01.reverse_proxy: "{{upstreams 5001}}"
+      caddy.handle_02:
+      caddy.handle_02.reverse_proxy: "{{upstreams 80}}"
+
+networks:
+  # Add caddy as an external network.
+  caddy:
+    external: true
