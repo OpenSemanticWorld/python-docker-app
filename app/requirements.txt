@@ -1,6 +1,8 @@
 panel
 param
 osw
+# fix "FileNotFoundError: Config file '.env' not found."
+starlette < 0.36.0
 fastapi
 starlette_authlib
 httpx
