@@ -16,7 +16,7 @@ Modify `pn_dashboard.py` as required and make sure `apps/__init__.py` populates 
 
 Run `python pn_dashboard.py` for local development. Supply an `accounts.pwd.yaml` file if needed.
 
-You can also add an existing app as submodule:
+You can also add an existing app as submodule in subfolder `app`:
 ```bash
 git submodule add <repo> apps
 ```

@@ -48,6 +48,9 @@ oauth = OAuth()
 host = os.environ.get('APP_HOST')
 port = int(os.environ.get('APP_PORT'))
 domain = os.environ.get('APP_DOMAIN')
+if "://" in domain:
+    domain = domain.split("://")[1]
+    
 internal_host = 'localhost'
 internal_port = 5001
 osw_server = os.environ.get('OSW_SERVER')
