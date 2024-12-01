@@ -9,3 +9,5 @@ httpx
 mwoauth
 uvicorn
 uvloop
+# fix: subject must be string: https://github.com/apache/superset/issues/30995
+pyjwt<2.10
